@@ -1,15 +1,16 @@
 ## CFD - Ghosh dhasdhidhar - PG 51 heat conduction 
 
 import matplotlib.pyplot as plt
-from time import sleep
+import operator
 ### Inititalization of variables and constants 
 D = 2.25 
-nodes = 50
+nodes = 4	
 x = [1.0]*nodes
 z = range(nodes)
+epsilon = 0.0001
 plt.ion()
 
-
+xlast = x[:]
 
 # x = [1.0,1.0,1.0,1.0,1.0] # initial value for the iteration 
 # epsilon = 0.001
@@ -24,6 +25,45 @@ for i in range(100):
 		x[j] = (x[j-1]+x[j+1])/D
 	x[nodes-1] = (2*x[nodes-2])/D
 	# print x
+	if max(map(operator.sub,xlast,x)) < epsilon:
+		print "solution converged"
+		print x
+		break
+	xlast = x[:]
 	plt.plot(z,x)
 	plt.show()
-	plt.pause(0.01)
+	plt.pause(0.01)	## CFD - Ghosh dhasdhidhar - PG 51 heat conduction 
+
+import matplotlib.pyplot as plt
+import operator
+### Inititalization of variables and constants 
+D = 2.25 
+nodes = 4	
+x = [1.0]*nodes
+z = range(nodes)
+epsilon = 0.0001
+plt.ion()
+
+xlast = x[:]
+
+# x = [1.0,1.0,1.0,1.0,1.0] # initial value for the iteration 
+# epsilon = 0.001
+# z = [0,1,2,3,4]
+# plt.ion()
+# l = len(x)
+
+
+for i in range(100):
+	x[0] = (1+x[1])/D
+	for j in range(1,nodes-1):
+		x[j] = (x[j-1]+x[j+1])/D
+	x[nodes-1] = (2*x[nodes-2])/D
+	# print x
+	if max(map(operator.sub,xlast,x)) < epsilon:
+		print "solution converged"
+		print x
+		break
+	xlast = x[:]
+	plt.plot(z,x)
+	plt.show()
+	plt.pause(0.01)	
